@@ -8,6 +8,7 @@ public class TestProj {
 
 		for(int i=0; i<5; i++){
 			System.out.println("Counting: " + i);
+			System.out.println("new change to program...");
 
 		}
 		
