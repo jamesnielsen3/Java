@@ -115,6 +115,8 @@ public class Project {
 				System.out.println(rs.getString("ProductID") + " - " + rs.getString("productName") + " - " + rs.getString("qty"));
 			}
 			connect.close();
+			rs.close();
+			ps.close();
 			//get one database interaction working
 		} catch (SQLException e) {
 		
@@ -131,8 +133,11 @@ public class Project {
 			PreparedStatement ps = connect.prepareStatement("insert into products(productName, qty)" + " values('" + productName + "'," + qty + ")");
 			
 			ps.execute();
-			connect.close();
+			
 			System.out.println("Item: "+ productName + " has been added with a quantity of " + qty );
+			connect.close();
+			
+			ps.close();
 			
 		} catch (SQLException e) {
 		
@@ -145,13 +150,14 @@ public class Project {
 		try {
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/InventorySystem","root","Database123!");
 			
-			
-			
 			PreparedStatement ps = connect.prepareStatement("UPDATE products SET qty = '" + qty + "' WHERE productID = '" + pID +"';");
 			
 			ps.execute();
-			connect.close();
+			
 			System.out.println("Item # "+ pID + " has been updated to a quantity of: " + qty );
+			System.out.println();
+			connect.close();
+			ps.close();
 			
 		} catch (SQLException e) {
 		
@@ -171,10 +177,12 @@ public class Project {
 				System.out.println(rs.getString("ProductID") + " - " + rs.getString("productName") + " - " + rs.getString("qty"));
 			}
 			connect.close();
-			//get one database interaction working
+			rs.close();
+			ps.close();
+			
 		} catch (SQLException e) {
 		
-			// TODO Auto-generated catch block
+			 //TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -202,16 +210,21 @@ public class Project {
 		try {
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/InventorySystem","root","Database123!");
 			
-			PreparedStatement ps = connect.prepareStatement("Select * from Products where productname = '%"+ productName +"%'");
+			PreparedStatement ps = connect.prepareStatement("Select * from Products where productname = '"+ productName +"'");
 			
 			ResultSet rs = ps.executeQuery();
 			
 			
 			while(rs.next()) {
-				System.out.println(rs.getString("ProductID") + " - " + rs.getString("productName"));
+				System.out.println("Search returns the following:");
+				System.out.println(rs.getString("ProductID") + " - " + rs.getString("productName")+ " - " + rs.getString("qty"));
 			}
+			
 			connect.close();
-			//get one database interaction working
+			rs.close();
+			ps.close();
+
+			
 		} catch (SQLException e) {
 		
 			// TODO Auto-generated catch block
